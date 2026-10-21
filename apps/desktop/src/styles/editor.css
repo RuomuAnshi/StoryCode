@@ -1,0 +1,188 @@
+/* ProseMirror surface: reading comfort first. */
+.sc-editor .ProseMirror {
+  outline: none;
+  min-height: 100%;
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 1.9;
+  color: var(--sc-editor-text);
+  caret-color: var(--sc-accent);
+}
+
+.sc-editor .ProseMirror > * + * {
+  margin-top: 0.85em;
+}
+
+.sc-editor .ProseMirror p {
+  margin: 0;
+  text-indent: 2em;
+}
+
+/* Headings are structural, not indented. */
+.sc-editor .ProseMirror h1,
+.sc-editor .ProseMirror h2,
+.sc-editor .ProseMirror h3 {
+  text-indent: 0;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+.sc-editor .ProseMirror h1 {
+  font-size: 1.7em;
+  margin-top: 1.6em;
+}
+.sc-editor .ProseMirror h2 {
+  font-size: 1.35em;
+  margin-top: 1.4em;
+}
+.sc-editor .ProseMirror h3 {
+  font-size: 1.12em;
+  margin-top: 1.2em;
+}
+
+.sc-editor .ProseMirror ul,
+.sc-editor .ProseMirror ol {
+  padding-left: 2em;
+  text-indent: 0;
+}
+.sc-editor .ProseMirror li {
+  text-indent: 0;
+}
+.sc-editor .ProseMirror li > p {
+  text-indent: 0;
+}
+
+.sc-editor .ProseMirror blockquote {
+  border-left: 2px solid var(--sc-border-strong);
+  padding-left: 1em;
+  color: var(--sc-text-secondary);
+  text-indent: 0;
+}
+
+.sc-editor .ProseMirror code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--sc-surface-raised);
+  border: 1px solid var(--sc-border);
+  border-radius: 4px;
+  padding: 0.1em 0.32em;
+}
+
+.sc-editor .ProseMirror pre {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--sc-surface-raised);
+  border: 1px solid var(--sc-border);
+  border-radius: 8px;
+  padding: 0.8em 1em;
+  text-indent: 0;
+  overflow-x: auto;
+}
+.sc-editor .ProseMirror pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.sc-editor .ProseMirror hr {
+  border: none;
+  border-top: 1px solid var(--sc-border);
+  margin: 2em auto;
+  width: 40%;
+}
+
+/* Placeholder for an empty chapter. */
+.sc-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--sc-text-muted);
+  text-indent: 2em;
+}
+
+.sc-editor ::selection {
+  background: var(--sc-accent-soft);
+}
+
+/* Read-only Markdown for project settings and reference documents. */
+.sc-markdown {
+  color: var(--sc-editor-text);
+  font-size: 15px;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.sc-markdown > * + * {
+  margin-top: 1em;
+}
+.sc-markdown h1,
+.sc-markdown h2,
+.sc-markdown h3,
+.sc-markdown h4 {
+  font-weight: 600;
+  line-height: 1.45;
+  margin: 1.4em 0 0.65em;
+}
+.sc-markdown h1 {
+  font-size: 1.8em;
+}
+.sc-markdown h2 {
+  font-size: 1.4em;
+}
+.sc-markdown h3 {
+  font-size: 1.15em;
+}
+.sc-markdown ul {
+  list-style: disc;
+  padding-left: 1.5em;
+}
+.sc-markdown ol {
+  list-style: decimal;
+  padding-left: 1.5em;
+}
+.sc-markdown blockquote {
+  border-left: 3px solid var(--sc-border);
+  padding-left: 1em;
+  color: var(--sc-text-secondary);
+}
+.sc-markdown table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.sc-markdown th,
+.sc-markdown td {
+  border: 1px solid var(--sc-border);
+  padding: 0.45em 0.75em;
+  text-align: left;
+}
+.sc-markdown th {
+  background: var(--sc-surface-raised);
+}
+.sc-markdown code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--sc-surface-raised);
+  border-radius: 4px;
+  padding: 0.15em 0.3em;
+}
+.sc-markdown pre {
+  overflow-x: auto;
+  padding: 1em;
+  background: var(--sc-surface-raised);
+  border-radius: 8px;
+}
+.sc-markdown pre code {
+  padding: 0;
+}
+.sc-markdown a {
+  color: var(--sc-accent-text);
+  text-decoration: underline;
+}
+.sc-markdown hr {
+  border: 0;
+  border-top: 1px solid var(--sc-border);
+  margin: 1.5em 0;
+}

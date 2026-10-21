@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.DS_Store
+._*
+target/
+apps/desktop/src-tauri/target/
+*.log
+.env
+.env.local
+/tmp/
+
+# Generated TypeScript and Tauri schema output
+dist-types/
+apps/desktop/src-tauri/gen/schemas/

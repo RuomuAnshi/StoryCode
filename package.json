@@ -1,0 +1,35 @@
+{
+  "name": "storycode",
+  "private": true,
+  "version": "0.1.0",
+  "description": "StoryCode - an AI-native novel writing IDE",
+  "type": "module",
+  "packageManager": "pnpm@12.8.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @storycode/desktop dev",
+    "dev:tauri": "pnpm --filter @storycode/desktop tauri:dev",
+    "build": "pnpm --filter @storycode/desktop build",
+    "build:tauri": "pnpm --filter @storycode/desktop tauri:build",
+    "typecheck": "tsc -b tsconfig.json --pretty false",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "pnpm typecheck && pnpm lint && pnpm test"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.6.5",
+    "eslint": "10.13.0",
+    "eslint-config-prettier": "10.1.8",
+    "prettier": "3.9.10",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.0",
+    "vitest": "5.0.5"
+  }
+}

@@ -1,0 +1,150 @@
+/* Design tokens: Linear x Apple Pro. Dark is the default; light is a first-class theme. */
+@import 'tailwindcss';
+
+@theme {
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Source Han Sans SC', 'Noto Sans CJK SC', sans-serif;
+  --font-serif:
+    'Songti SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'Iowan Old Style', Georgia, serif;
+  --font-mono: 'SF Mono', ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
+}
+
+:root {
+  color-scheme: dark;
+  /* Surfaces */
+  --sc-bg: #0b0b0f;
+  --sc-surface: #121218;
+  --sc-surface-raised: #17171f;
+  --sc-surface-overlay: #1d1d27;
+  --sc-border: #26262f;
+  --sc-border-strong: #34343f;
+
+  /* Text */
+  --sc-text: #ececf1;
+  --sc-text-secondary: #a5a5b5;
+  --sc-text-muted: #6e6e80;
+
+  /* Accent */
+  --sc-accent: #6366f1;
+  --sc-accent-hover: #7c7ef4;
+  --sc-accent-soft: rgb(99 102 241 / 0.14);
+  --sc-accent-text: #a7a9ff;
+
+  /* Semantic */
+  --sc-success: #34d399;
+  --sc-warning: #fbbf24;
+  --sc-danger: #f87171;
+  --sc-info: #60a5fa;
+
+  --sc-editor-bg: #0e0e13;
+  --sc-editor-text: #e4e4ec;
+}
+
+:root.light {
+  color-scheme: light;
+  --sc-bg: #fbfbfd;
+  --sc-surface: #ffffff;
+  --sc-surface-raised: #f5f5f8;
+  --sc-surface-overlay: #ffffff;
+  --sc-border: #e6e6ec;
+  --sc-border-strong: #d4d4dd;
+
+  --sc-text: #18181f;
+  --sc-text-secondary: #55556a;
+  --sc-text-muted: #8b8b9c;
+
+  --sc-accent: #5457e5;
+  --sc-accent-hover: #4346d4;
+  --sc-accent-soft: rgb(84 87 229 / 0.1);
+  --sc-accent-text: #4346d4;
+
+  --sc-success: #059669;
+  --sc-warning: #d97706;
+  --sc-danger: #dc2626;
+  --sc-info: #2563eb;
+
+  --sc-editor-bg: #ffffff;
+  --sc-editor-text: #1a1a22;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--sc-bg);
+  color: var(--sc-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow: hidden;
+  /* Native desktop feel: text is not selectable by default, except where it matters. */
+  user-select: none;
+}
+
+input,
+textarea,
+[contenteditable='true'],
+.sc-selectable {
+  user-select: text;
+}
+
+::selection {
+  background: var(--sc-accent-soft);
+}
+
+/* Slim, unobtrusive scrollbars. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sc-border-strong) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--sc-border-strong);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--sc-text-muted);
+  background-clip: content-box;
+}
+
+@keyframes sc-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sc-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.sc-fade-in {
+  animation: sc-fade-in 140ms ease-out;
+}
+
+.sc-pulse {
+  animation: sc-pulse 1.4s ease-in-out infinite;
+}

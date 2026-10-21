@@ -1,0 +1,12 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/core" },
+    { "path": "./packages/storage" },
+    { "path": "./packages/validation" },
+    { "path": "./packages/agent" },
+    { "path": "./apps/desktop" },
+    { "path": "./tests" },
+    { "path": "./tsconfig.tools.json" }
+  ]
+}

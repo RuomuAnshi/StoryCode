@@ -1,0 +1,9 @@
+node_modules
+dist
+coverage
+target
+pnpm-lock.yaml
+*.md
+
+# Tauri-generated ACL schemas
+apps/desktop/src-tauri/gen/schemas/

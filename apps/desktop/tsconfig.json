@@ -1,0 +1,35 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "rootDir": ".",
+    "outDir": "dist-types",
+    "tsBuildInfoFile": "dist-types/.tsbuildinfo",
+    "types": ["node", "vite/client"],
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@storycode/core": ["../../packages/core/src/index.ts"],
+      "@storycode/storage": ["../../packages/storage/src/index.ts"],
+      "@storycode/validation": ["../../packages/validation/src/index.ts"],
+      "@storycode/agent": ["../../packages/agent/src/index.ts"]
+    },
+    "noEmit": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts"],
+  "references": [
+    {
+      "path": "../../packages/core"
+    },
+    {
+      "path": "../../packages/storage"
+    },
+    {
+      "path": "../../packages/validation"
+    },
+    {
+      "path": "../../packages/agent"
+    }
+  ]
+}

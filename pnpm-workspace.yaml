@@ -1,0 +1,14 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+  - 'tests'
+
+storeDir: /tmp/sc-pnpm-store
+packageImportMethod: copy
+strictPeerDependencies: false
+networkConcurrency: 4
+
+onlyBuiltDependencies:
+  - esbuild
+minimumReleaseAgeExclude:
+  - lucide-react@1.60.0
