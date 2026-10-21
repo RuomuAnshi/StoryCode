@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AlertTriangle, FileText, Loader2 } from 'lucide-react';
+import { RelationshipView } from '../relationships/RelationshipView';
 import { MarkdownPreview } from './MarkdownPreview';
 import { ChapterEditor } from './ChapterEditor';
 import { Banner, EmptyState } from '@/components/primitives';
@@ -52,6 +53,8 @@ export function EditorPane({ onCreateChapter, onOpenSettings }: EditorPaneProps)
   }, [document, titleDraft, updateTitle]);
 
   const isChapter = document?.kind === 'chapter';
+  const isRelationship =
+    document?.path.startsWith('plot/relationships/') && document.path.endsWith('.md');
 
   if (!project) {
     return (
@@ -173,14 +176,24 @@ export function EditorPane({ onCreateChapter, onOpenSettings }: EditorPaneProps)
         />
       ) : (
         <div className="min-h-0 flex-1 overflow-y-auto">
-          <div className="mx-auto max-w-[42rem] px-8 py-8">
+          <div
+            className={cn('mx-auto px-8 py-8', isRelationship ? 'max-w-[64rem]' : 'max-w-[42rem]')}
+          >
             {saveError ? (
               <Banner tone="warning" onDismiss={undefined}>
                 <AlertTriangle size={13} className="mr-1 inline" />
                 该文件为只读预览：{saveError}
               </Banner>
             ) : null}
-            {document.path.endsWith('.md') ? (
+            {isRelationship ? (
+              <RelationshipView
+                key={`${project.root}:${document.path}`}
+                project={project.store}
+                path={document.path}
+                source={document.body}
+                onOpen={(path) => void reload(path)}
+              />
+            ) : document.path.endsWith('.md') ? (
               <MarkdownPreview source={document.body} />
             ) : (
               <pre className="whitespace-pre-wrap text-[14px] leading-[1.85]">{document.body}</pre>

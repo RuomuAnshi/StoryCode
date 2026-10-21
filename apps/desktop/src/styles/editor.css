@@ -186,3 +186,18 @@
   border-top: 1px solid var(--sc-border);
   margin: 1.5em 0;
 }
+
+.sc-graph-edge:focus {
+  outline: none;
+}
+.sc-graph-edge:focus rect {
+  stroke: var(--sc-accent-text);
+  stroke-width: 2;
+}
+.sc-graph-node:focus {
+  outline: none;
+}
+.sc-graph-node:focus rect {
+  stroke: var(--sc-accent-text);
+  stroke-width: 3;
+}

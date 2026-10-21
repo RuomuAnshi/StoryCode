@@ -40,3 +40,23 @@ export const RELATIONSHIP_TYPE_LABELS: Record<RelationshipType, string> = {
   alliance: '同盟',
   other: '其他',
 };
+
+/** Read-only graph derived from authoritative project Markdown. */
+export const RelationshipGraphSchema = z.object({
+  nodes: z.array(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      filePath: z.string().optional(),
+      missing: z.boolean(),
+    }),
+  ),
+  edges: z.array(
+    CharacterRelationshipSchema.extend({
+      filePath: z.string(),
+      displayStatus: z.enum(['confirmed', 'proposed', 'rejected', 'superseded']),
+    }),
+  ),
+  warnings: z.array(z.string()),
+});
+export type RelationshipGraph = z.infer<typeof RelationshipGraphSchema>;
