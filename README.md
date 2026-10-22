@@ -34,6 +34,8 @@ StoryCode 把小说当成一个**工程**：
 | Agent 生成章节提案 → 审核 → 写入真实文件 | ✅ 已实现 |
 | 单向接受 / 拒绝、全部接受 / 拒绝 | ✅ 已实现 |
 | 运行中停止、失败重试 | ✅ 已实现 |
+| 世界观与项目信息预览 | ✅ 世界观字段与 Markdown 正文、project.json 可读信息及原文查看 |
+| 设定文件编辑 | ✅ 人物 / 世界观 / 关系 Markdown 源码编辑、校验、保存前快照与预览切换 |
 | 人物关系图 | ✅ 有向关系、确认状态、双方视角、缩放及原文切换（只读） |
 | 联网搜索与网页阅读 | ✅ 默认关闭的联网开关、DuckDuckGo 搜索、公开网页文字与来源链接 |
 | 深色 / 浅色主题、侧栏折叠与调宽 | ✅ 已实现 |
@@ -61,7 +63,7 @@ pnpm dev:tauri        # 启动完整桌面应用（推荐）
 
 ```bash
 pnpm typecheck        # tsc -b，必须 0 error
-pnpm test             # vitest run，220 个测试
+pnpm test             # vitest run，229 个测试
 pnpm lint             # eslint，0 warning
 pnpm build            # 前端构建
 ```

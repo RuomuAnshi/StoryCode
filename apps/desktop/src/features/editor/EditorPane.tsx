@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { AlertTriangle, FileText, Loader2 } from 'lucide-react';
+import { FileText, Loader2 } from 'lucide-react';
+import { isProtectedPath } from '@storycode/core';
+import { MarkdownSourceEditor } from './MarkdownSourceEditor';
 import { RelationshipView } from '../relationships/RelationshipView';
+import { ProjectPreview } from './ProjectPreview';
+import { WorldOverviewPreview } from './WorldOverviewPreview';
 import { MarkdownPreview } from './MarkdownPreview';
 import { ChapterEditor } from './ChapterEditor';
 import { Banner, EmptyState } from '@/components/primitives';
@@ -15,7 +19,7 @@ interface EditorPaneProps {
 }
 
 /** Center pane: the writing surface. */
-export function EditorPane({ onCreateChapter, onOpenSettings }: EditorPaneProps) {
+export function EditorPane({ onCreateChapter }: EditorPaneProps) {
   const document = useEditor((state) => state.document);
   const saveStatus = useEditor((state) => state.saveStatus);
   const saveError = useEditor((state) => state.saveError);
@@ -27,6 +31,7 @@ export function EditorPane({ onCreateChapter, onOpenSettings }: EditorPaneProps)
   const reload = useEditor((state) => state.openFile);
   const project = useWorkspace((state) => state.project);
 
+  const [editingPath, setEditingPath] = useState<string | null>(null);
   const [reading, setReading] = useState(false);
   const [titleDraft, setTitleDraft] = useState('');
   const titleRef = useRef<HTMLInputElement>(null);
@@ -53,6 +58,9 @@ export function EditorPane({ onCreateChapter, onOpenSettings }: EditorPaneProps)
   }, [document, titleDraft, updateTitle]);
 
   const isChapter = document?.kind === 'chapter';
+  const canEditSource =
+    document?.kind === 'other' && document.path.endsWith('.md') && !isProtectedPath(document.path);
+  const editingSource = canEditSource && editingPath === document?.path;
   const isRelationship =
     document?.path.startsWith('plot/relationships/') && document.path.endsWith('.md');
 
@@ -109,9 +117,25 @@ export function EditorPane({ onCreateChapter, onOpenSettings }: EditorPaneProps)
             aria-label="章节标题"
           />
         ) : (
-          <span className="truncate text-[12.5px] font-medium text-[var(--sc-text)]">
+          <span className="min-w-0 flex-1 truncate text-[12.5px] font-medium text-[var(--sc-text)]">
             {document.path}
           </span>
+        )}
+        {canEditSource && (
+          <button
+            type="button"
+            aria-pressed={editingSource}
+            onClick={() => {
+              if (!editingSource) setEditingPath(document.path);
+              else
+                void save().then(() => {
+                  if (useEditor.getState().saveStatus === 'saved') setEditingPath(null);
+                });
+            }}
+            className="shrink-0 rounded px-2 py-1 text-[11px] text-[var(--sc-accent-text)] hover:bg-[var(--sc-surface-raised)]"
+          >
+            {editingSource ? '保存并预览' : '编辑文件'}
+          </button>
         )}
         {isChapter && (
           <button
@@ -139,7 +163,10 @@ export function EditorPane({ onCreateChapter, onOpenSettings }: EditorPaneProps)
               tone="warning"
               action={
                 <div className="flex shrink-0 gap-1.5">
-                  <Button size="sm" onClick={() => void reload(conflict.path)}>
+                  <Button
+                    size="sm"
+                    onClick={() => void reload(conflict.path, { discardChanges: true })}
+                  >
                     重新载入
                   </Button>
                   <Button size="sm" variant="danger" onClick={() => void save({ force: true })}>
@@ -156,8 +183,8 @@ export function EditorPane({ onCreateChapter, onOpenSettings }: EditorPaneProps)
             <Banner
               tone="error"
               action={
-                <Button size="sm" onClick={onOpenSettings}>
-                  检查模型设置
+                <Button size="sm" onClick={() => void save()}>
+                  重试保存
                 </Button>
               }
             >
@@ -167,7 +194,9 @@ export function EditorPane({ onCreateChapter, onOpenSettings }: EditorPaneProps)
         </div>
       )}
 
-      {isChapter && !reading ? (
+      {editingSource ? (
+        <MarkdownSourceEditor source={document.body} onChange={handleChange} />
+      ) : isChapter && !reading ? (
         <ChapterEditor
           documentKey={document.path}
           body={document.body}
@@ -179,12 +208,6 @@ export function EditorPane({ onCreateChapter, onOpenSettings }: EditorPaneProps)
           <div
             className={cn('mx-auto px-8 py-8', isRelationship ? 'max-w-[64rem]' : 'max-w-[42rem]')}
           >
-            {saveError ? (
-              <Banner tone="warning" onDismiss={undefined}>
-                <AlertTriangle size={13} className="mr-1 inline" />
-                该文件为只读预览：{saveError}
-              </Banner>
-            ) : null}
             {isRelationship ? (
               <RelationshipView
                 key={`${project.root}:${document.path}`}
@@ -193,6 +216,10 @@ export function EditorPane({ onCreateChapter, onOpenSettings }: EditorPaneProps)
                 source={document.body}
                 onOpen={(path) => void reload(path)}
               />
+            ) : document.path === 'project.json' ? (
+              <ProjectPreview source={document.body} />
+            ) : document.path === 'world/overview.md' ? (
+              <WorldOverviewPreview source={document.body} />
             ) : document.path.endsWith('.md') ? (
               <MarkdownPreview source={document.body} />
             ) : (
